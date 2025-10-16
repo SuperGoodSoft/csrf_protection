@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-require_relative "lib/rack/sec_fetch_site/version"
+require_relative "lib/super_good/csrf_protection/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "rack-sec_fetch_site"
-  spec.version = Rack::SecFetchSite::VERSION
+  spec.name = "super_good-csrf_protection"
+  spec.version = SuperGood::CSRFProtection::VERSION
   spec.authors = ["Sofia Besenski", "Jared Norman", "Alistair Norman", "Senem Soy", "Noah Silvera"]
   spec.email = ["sofia@super.gd", "jared@super.gd", "alistair@super.gd", "senem@super.gd", "noah@super.gd"]
 
   spec.summary = "A Rack middleware for handling the Sec-Fetch-Site header."
   spec.description = "A Rack middleware for handling the Sec-Fetch-Site header."
-  spec.homepage = "https://github.com/SuperGoodSoft/rack-sec_fetch_site"
+  spec.homepage = "https://github.com/SuperGoodSoft/csrf_protection"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.2.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/SuperGoodSoft/rack-sec_fetch_site"
-  spec.metadata["changelog_uri"] = "https://github.com/SuperGoodSoft/rack-sec_fetch_site/blob/main/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/SuperGoodSoft/csrf_protection"
+  spec.metadata["changelog_uri"] = "https://github.com/SuperGoodSoft/csrf_protection/blob/main/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

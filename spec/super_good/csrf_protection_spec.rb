@@ -1,6 +1,6 @@
 # frozen_string_literal: true
  
-RSpec.describe Rack::SecFetchSite do
+RSpec.describe SuperGood::CSRFProtection do
   subject { described_class.new(app) }
   let(:app) { proc { |env| [200, { "Content-Type" => "text/plain" }, ["OK"]] } }
   let(:get_env) { Rack::MockRequest.env_for("http://example.com:8080/", {:method => "GET", "HTTP_SEC_FETCH_SITE" => sec_fetch_site}) }
@@ -10,7 +10,7 @@ RSpec.describe Rack::SecFetchSite do
     let(:sec_fetch_site) { "cross-site" }
 
     it "raises an error for POST" do
-      expect { subject.call(post_env) }.to raise_error(Rack::SecFetchSite::Error)
+      expect { subject.call(post_env) }.to raise_error(SuperGood::CSRFProtection::Error)
     end
     
     it "calls the app for GET" do

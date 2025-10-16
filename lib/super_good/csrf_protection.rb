@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "sec_fetch_site/version"
+require_relative "csrf_protection/version"
 
-module Rack
-  class SecFetchSite
+module SuperGood
+  class CSRFProtection
     class Error < StandardError; end
 
     def initialize(app)

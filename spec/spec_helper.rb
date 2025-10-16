@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rack/sec_fetch_site"
+require "super_good/csrf_protection"
 require "rack"
 require "debug"
 
