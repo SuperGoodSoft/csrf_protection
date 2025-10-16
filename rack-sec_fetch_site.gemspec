@@ -5,19 +5,18 @@ require_relative "lib/rack/sec_fetch_site/version"
 Gem::Specification.new do |spec|
   spec.name = "rack-sec_fetch_site"
   spec.version = Rack::SecFetchSite::VERSION
-  spec.authors = ["Sofia Besenski"]
-  spec.email = ["sofiabesenski4@gmail.com"]
+  spec.authors = ["Sofia Besenski", "Jared Norman", "Alistair Norman", "Senem Soy", "Noah Silvera"]
+  spec.email = ["sofia@super.gd", "jared@super.gd", "alistair@super.gd", "senem@super.gd", "noah@super.gd"]
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "https://github.com/sofiabesenski4/rack-sec_fetch_site"
+  spec.summary = "A Rack middleware for handling the Sec-Fetch-Site header."
+  spec.description = "A Rack middleware for handling the Sec-Fetch-Site header."
+  spec.homepage = "https://github.com/SuperGoodSoft/rack-sec_fetch_site"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.2.0"
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/sofiabesenski4/rack-sec_fetch_site"
-  spec.metadata["changelog_uri"] = "https://github.com/sofiabesenski4/rack-sec_fetch_site/blob/main/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/SuperGoodSoft/rack-sec_fetch_site"
+  spec.metadata["changelog_uri"] = "https://github.com/SuperGoodSoft/rack-sec_fetch_site/blob/main/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

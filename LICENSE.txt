@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2025 Sofia Besenski
+Copyright (c) 2025 Super Good Software
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
