@@ -15,7 +15,7 @@ module SuperGood
         raise(Error, "Invalid Sec-Fetch-Site header")
       end
 
-      @app.call(env) 
+      @app.call(env)
     end
 
     private
