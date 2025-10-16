@@ -1,13 +1,13 @@
 # SuperGood::CSRFProtection
 
-A Rack middleware for CSRF protection using the Sec-Fetch-Site header to prevent cross-site requests.
+This Rack middleware provides CSRF protection using the Sec-Fetch-Site header. It is inspired by Go's `http.CrossOriginProtection` which was introduced in Go 1.25. You can read about it [in this article](https://www.alexedwards.net/blog/preventing-csrf-in-go) and find more information about the `Sec-Fetch-Site` header [on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site#browser_compatibility).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'super_good-csrf_protection'
+gem "super_good-csrf_protection"
 ```
 
 And then execute:
@@ -27,7 +27,7 @@ gem install super_good-csrf_protection
 Add the middleware to your Rack application:
 
 ```ruby
-require 'super_good/csrf_protection'
+require "super_good/csrf_protection"
 
 use SuperGood::CSRFProtection
 ```
