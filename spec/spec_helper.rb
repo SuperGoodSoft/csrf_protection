@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "rack/sec_fetch_site"
+require "rack"
+require "debug"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
