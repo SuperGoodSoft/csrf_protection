@@ -20,8 +20,10 @@ module SuperGood
 
     private
 
+    SAFE_METHODS = ["GET", "HEAD", "OPTIONS"].freeze
+
     def unsafe_request?(env)
-      env["REQUEST_METHOD"] != "GET"
+      !SAFE_METHODS.include?(env["REQUEST_METHOD"])
     end
   end
 end
