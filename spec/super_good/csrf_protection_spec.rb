@@ -1,68 +1,97 @@
 # frozen_string_literal: true
 
 RSpec.describe SuperGood::CSRFProtection do
-  subject { described_class.new(app) }
-  let(:app) { proc { |env| [200, {"Content-Type" => "text/plain"}, ["OK"]] } }
-  let(:get_env) { Rack::MockRequest.env_for("http://example.com:8080/", {:method => "GET", "HTTP_SEC_FETCH_SITE" => sec_fetch_site}) }
-  let(:head_env) { Rack::MockRequest.env_for("http://example.com:8080/", {:method => "HEAD", "HTTP_SEC_FETCH_SITE" => sec_fetch_site}) }
-  let(:options_env) { Rack::MockRequest.env_for("http://example.com:8080/", {:method => "OPTIONS", "HTTP_SEC_FETCH_SITE" => sec_fetch_site}) }
-  let(:post_env) { Rack::MockRequest.env_for("http://example.com:8080/", {:method => "POST", "HTTP_SEC_FETCH_SITE" => sec_fetch_site}) }
-  let(:put_env) { Rack::MockRequest.env_for("http://example.com:8080/", {:method => "PUT", "HTTP_SEC_FETCH_SITE" => sec_fetch_site}) }
-  let(:delete_env) { Rack::MockRequest.env_for("http://example.com:8080/", {:method => "DELETE", "HTTP_SEC_FETCH_SITE" => sec_fetch_site}) }
+  subject {
+    described_class.new(app, raise_error: raise_error_option).call(env)
+  }
+
+  let(:app) { ->(_env) { [200, {"Content-Type" => "text/plain"}, ["OK"]] } }
+  let(:env) {
+    Rack::MockRequest.env_for("http://example.com:8080/", {
+      :method => method,
+      "HTTP_SEC_FETCH_SITE" => sec_fetch_site
+    })
+  }
+
+  shared_examples "allows request" do |method|
+    context method do
+      let(:method) { method }
+      let(:raise_error_option) { true }
+
+      it "allows the request" do
+        expect(subject.first).to eq(200)
+      end
+    end
+  end
+
+  shared_examples "denies request" do |method|
+    context method do
+      let(:method) { method }
+
+      context "when raise_error is true" do
+        let(:raise_error_option) { true }
+
+        it "raises an error" do
+          expect { subject }.to raise_error(SuperGood::CSRFProtection::Error)
+        end
+      end
+
+      context "when raise_error is false" do
+        let(:raise_error_option) { false }
+
+        it "returns a 403 response" do
+          expect(subject)
+            .to eq([403, {"Content-Type" => "text/plain"}, ["Forbidden"]])
+        end
+      end
+    end
+  end
 
   context "when the Sec-Fetch-Site contains cross-site" do
     let(:sec_fetch_site) { "cross-site" }
 
-    it "raises an error for POST" do
-      expect { subject.call(post_env) }.to raise_error(SuperGood::CSRFProtection::Error)
-    end
-
-    it "raises an error for PUT" do
-      expect { subject.call(put_env) }.to raise_error(SuperGood::CSRFProtection::Error)
-    end
-
-    it "raises an error for DELETE" do
-      expect { subject.call(delete_env) }.to raise_error(SuperGood::CSRFProtection::Error)
-    end
-
-    it "calls the app for GET" do
-      expect(subject.call(get_env).first).to eq(200)
-    end
-
-    it "calls the app for HEAD" do
-      expect(subject.call(head_env).first).to eq(200)
-    end
-
-    it "calls the app for OPTIONS" do
-      expect(subject.call(options_env).first).to eq(200)
-    end
+    include_examples "allows request", "GET"
+    include_examples "allows request", "HEAD"
+    include_examples "allows request", "OPTIONS"
+    include_examples "denies request", "POST"
+    include_examples "denies request", "PUT"
+    include_examples "denies request", "DELETE"
   end
 
   context "when the Sec-Fetch-Site header contains same-origin" do
     let(:sec_fetch_site) { "same-origin" }
 
-    it "calls the app for POST" do
-      expect(subject.call(post_env).first).to eq(200)
+    include_examples "allows request", "GET"
+    include_examples "allows request", "HEAD"
+    include_examples "allows request", "OPTIONS"
+    include_examples "allows request", "POST"
+    include_examples "allows request", "PUT"
+    include_examples "allows request", "DELETE"
+  end
+
+  context "when raise_error is false" do
+    let(:raise_error_option) { false }
+
+    context "when the Sec-Fetch-Site contains cross-site" do
+      let(:sec_fetch_site) { "cross-site" }
+
+      include_examples "allows request", "GET"
+      include_examples "allows request", "HEAD"
+      include_examples "allows request", "OPTIONS"
+      include_examples "denies request", "POST"
+      include_examples "denies request", "PUT"
+      include_examples "denies request", "DELETE"
     end
 
-    it "calls the app for PUT" do
-      expect(subject.call(put_env).first).to eq(200)
-    end
+    context "when the Sec-Fetch-Site header contains same-origin" do
+      let(:sec_fetch_site) { "same-origin" }
 
-    it "calls the app for DELETE" do
-      expect(subject.call(delete_env).first).to eq(200)
-    end
-
-    it "calls the app for GET" do
-      expect(subject.call(get_env).first).to eq(200)
-    end
-
-    it "calls the app for HEAD" do
-      expect(subject.call(head_env).first).to eq(200)
-    end
-
-    it "calls the app for OPTIONS" do
-      expect(subject.call(options_env).first).to eq(200)
+      include_examples "allows request", "GET"
+      include_examples "allows request", "HEAD"
+      include_examples "allows request", "OPTIONS"
+      include_examples "allows request", "POST"
+      include_examples "allows request", "PUT"
+      include_examples "allows request", "DELETE"
     end
   end
 end

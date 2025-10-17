@@ -8,16 +8,19 @@ module SuperGood
 
     class Error < StandardError; end
 
-    def initialize(app)
+    def initialize(app, raise_error: false)
       @app = app
+      @raise_error = raise_error
     end
 
     def call(env)
-      if unsafe_request?(env) && env["HTTP_SEC_FETCH_SITE"] != "same-origin"
-        raise(Error, "Invalid Sec-Fetch-Site header")
-      end
+      return @app.call(env) unless unsafe_request?(env) && env["HTTP_SEC_FETCH_SITE"] != "same-origin"
 
-      @app.call(env)
+      if @raise_error
+        raise(Error, "Invalid Sec-Fetch-Site header")
+      else
+        [403, {"Content-Type" => "text/plain"}, ["Forbidden"]]
+      end
     end
 
     private
