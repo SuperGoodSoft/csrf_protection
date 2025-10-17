@@ -1,6 +1,6 @@
 # SuperGood::CSRFProtection
 
-This Rack middleware provides CSRF protection using the Sec-Fetch-Site header. It is inspired by Go's `http.CrossOriginProtection` which was introduced in Go 1.25. You can read about it [in this article](https://www.alexedwards.net/blog/preventing-csrf-in-go) and find more information about the `Sec-Fetch-Site` header [on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site#browser_compatibility).
+This Rack middleware provides CSRF protection using the Sec-Fetch-Site header. It is inspired by Go's `http.CrossOriginProtection` which was introduced in Go 1.25. You can read about it [in this article](https://www.alexedwards.net/blog/preventing-csrf-in-go) and find more information about the `Sec-Fetch-Site` header [on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site).
 
 ## Installation
 
