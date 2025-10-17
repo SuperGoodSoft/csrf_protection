@@ -4,6 +4,8 @@ require_relative "csrf_protection/version"
 
 module SuperGood
   class CSRFProtection
+    SAFE_METHODS = ["GET", "HEAD", "OPTIONS"].freeze
+
     class Error < StandardError; end
 
     def initialize(app)
@@ -19,8 +21,6 @@ module SuperGood
     end
 
     private
-
-    SAFE_METHODS = ["GET", "HEAD", "OPTIONS"].freeze
 
     def unsafe_request?(env)
       !SAFE_METHODS.include?(env["REQUEST_METHOD"])
