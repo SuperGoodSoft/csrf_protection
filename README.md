@@ -32,7 +32,7 @@ require "super_good/csrf_protection"
 use SuperGood::CSRFProtection
 ```
 
-The middleware will automatically reject non-GET requests that don't have a `Sec-Fetch-Site: same-origin` header, providing protection against CSRF attacks.
+The middleware rejects all non-GET requests without the `Sec-Fetch-Site: same-origin` header, providing protection against CSRF attacks.
 
 ## Development
 
