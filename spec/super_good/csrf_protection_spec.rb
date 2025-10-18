@@ -76,8 +76,22 @@ RSpec.describe SuperGood::CSRFProtection do
     include_examples "denies unsafe HTTP methods"
   end
 
+  context "when the Sec-Fetch-Site contains same-site" do
+    let(:sec_fetch_site) { "same-site" }
+
+    include_examples "allows safe HTTP methods"
+    include_examples "denies unsafe HTTP methods"
+  end
+
   context "when the Sec-Fetch-Site header contains same-origin" do
     let(:sec_fetch_site) { "same-origin" }
+
+    include_examples "allows safe HTTP methods"
+    include_examples "allows unsafe HTTP methods"
+  end
+
+  context "when the Sec-Fetch-Site header contains none" do
+    let(:sec_fetch_site) { "none" }
 
     include_examples "allows safe HTTP methods"
     include_examples "allows unsafe HTTP methods"
