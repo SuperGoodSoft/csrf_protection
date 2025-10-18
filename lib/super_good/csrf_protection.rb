@@ -4,9 +4,10 @@ require_relative "csrf_protection/version"
 
 module SuperGood
   class CSRFProtection
-    SAFE_METHODS = ["GET", "HEAD", "OPTIONS"].freeze
-
     class Error < StandardError; end
+
+    SAFE_METHODS = %w[GET HEAD OPTIONS].freeze
+    SAFE_SEC_FETCH_SITE_VALUES = %w[same-origin none].freeze
 
     def initialize(app, raise_error: false)
       @app = app
@@ -31,7 +32,7 @@ module SuperGood
 
     def cross_origin?(env)
       sec_fetch_site = env["HTTP_SEC_FETCH_SITE"]
-      return sec_fetch_site != "same-origin" && sec_fetch_site != "none" if sec_fetch_site
+      return !SAFE_SEC_FETCH_SITE_VALUES.include?(sec_fetch_site) if sec_fetch_site
 
       origin = env["HTTP_ORIGIN"]
       return false unless origin
