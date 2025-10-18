@@ -2,6 +2,8 @@
 
 This Rack middleware provides CSRF protection using the Sec-Fetch-Site header. It is inspired by Go's `http.CrossOriginProtection` which was introduced in Go 1.25. You can read about it [in this article](https://www.alexedwards.net/blog/preventing-csrf-in-go) and find more information about the `Sec-Fetch-Site` header [on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site).
 
+The middleware blocks cross-origin state-changing requests (POST, PUT, PATCH, DELETE) by first checking the `Sec-Fetch-Site` header, which is available in all modern browsers, and rejecting requests where the value is not `same-origin` or `none`. For older browsers that don't send `Sec-Fetch-Site`, it falls back to comparing the `Origin` header against the `Host` header, ensuring that only requests from the same origin can modify state. Safe methods (GET, HEAD, OPTIONS) are always allowed through, and requests without an `Origin` header are treated as same-origin to support non-browser clients.
+
 ## Installation
 
 Add this line to your application's Gemfile:
