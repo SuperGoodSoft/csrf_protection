@@ -37,7 +37,7 @@ module SuperGood
       origin = env["HTTP_ORIGIN"]
       return false unless origin
 
-      host = env["HTTP_HOST"] || env["SERVER_NAME"]
+      host = env["HTTP_HOST"]
       origin_host = extract_host_from_origin(origin)
 
       origin_host != host
